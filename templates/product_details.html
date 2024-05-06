@@ -1,0 +1,148 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddie's Mart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" href="{% static 'css/product_details.css' %}">
+</head>
+<body style="overflow-x: hidden;">
+
+  {% include 'navbar.html' %}
+
+<br><br><br>
+
+<section id="product_details" >
+    <div class="container-fluid">
+        <br>
+        
+        <h4 class="main-title">{{our_products.name}} <span style="color: #5927e5;">Details</span></h4>
+        <hr style="width: 70%;border-top: 3px solid grey;"> 
+
+       <nav id="breadcrumb_nav" aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li id="bread_home" class="breadcrumb-item "><a href="{% url 'homepage' %}">Home</a></li>
+              <li id="bread_product" class="breadcrumb-item"><a href="{% url 'productpage' our_products.shop.name %}">Products</a></li>
+              <li id="bread_product_details" class="breadcrumb-item active" aria-current="page">{{our_products.name}}</li>
+            </ol>
+        </nav>
+
+        <br>
+
+        <div class="row row-cols-1  row-cols-lg-2 row-cols-md-1 ">
+
+        <div class="pro-image">
+           <center><img class=" text-center"  src="{{our_products.product_image.url}}" alt=""></center> 
+        </div>
+         
+        <div class="pro-content ">
+            <h5 class="product_details-heading">{{our_products.name | upper}}</h5>
+            <p class="product_details-storename"><span class="from">From : </span>{{shop_name}}</p>
+            <p class="product_details-description me-5">{{our_products.description}}</p>
+            <h6 class="cprice my-2">Current Price : Rs. <s>{{our_products.current_price | stringformat:'d'}}</s></h6>
+            <h4 class="oprice my-2">Offer Price   : Rs. {{our_products.price | stringformat:'d'}}</h4>
+            <div class="addcartbtn my-3">
+
+                {% if our_products.quantity > 0 %}
+                <input type="hidden" value="{{our_products.id}}" id="pid">
+                <!-- {% csrf_token %} -->
+                <div class="qtybtn">
+                  <p>
+                    <div  class="input-group" style="width:150px;">
+                    <button class="input-group-text text-light" id="btnMinus" style="background-color: red;border-radius: 10px;" ><i class="fa fa-minus"></i></button>
+                    <input type="text" name="qty" id="txtQty" value="1" style="margin: 0px 2px;box-shadow:none;border-radius: 10px;font-weight: 600;" class="form-control text-center">
+                    <button class="input-group-text text-light" style="background-color: red;border-radius: 10px;" id="btnPlus"><i class="fa fa-plus"></i></button>
+                    </div>
+                  </p>
+                </div>
+
+                  <button id="btnCart" class="addbtn btn"><i class="fas fa-shopping-cart"></i> Add to Cart</button>
+                {% else %}
+                  <button id="OOS_btn"  class="addbtn btn" style="background-color: gray;"><i class="fas fa-minus"></i> Out of Stack</button>
+                {% endif %}  
+            </div>
+        </div>
+
+      </div>
+    </div>
+      
+
+<script >
+
+document.addEventListener("DOMContentLoaded", function(event) {
+        const btnPlus = document.getElementById("btnPlus");
+        const btnMinus = document.getElementById("btnMinus");
+        const txtqty = document.getElementById("txtQty");
+        const pid = document.getElementById("pid");
+        // const tkn =document.querySelector('[name="csrfmiddlewaretoken"]').value;
+        const btnCart = document.getElementById("btnCart");
+        
+       
+btnPlus.addEventListener("click", function() {
+        let qty=parseInt(txtQty.value, 10);
+        qty=isNaN(qty)?0:qty;
+        if (qty<10){
+            qty++;
+            txtQty.value=qty;
+        }
+      });
+
+btnMinus.addEventListener("click", function () {
+        let qty=parseInt(txtQty.value,10);
+        qty=isNaN(qty)?0:qty;
+
+        if (qty>1) {
+            qty--;
+            txtQty.value=qty;
+        }
+      });
+
+btnCart.addEventListener("click", function() {
+        let qty=parseInt(txtQty.value,10);
+        qty=isNaN(qty)?0:qty;
+
+        if (qty>0){
+       let postObj = {
+                 'product_qty': qty,
+                 'pid': pid.value,
+               
+}
+ //console.log(postObj);
+   fetch("/addtocart/",{
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                   'Accept': 'application/json',
+                   'X-Requested-With': 'XMLHttpRequest',
+                   'X-CSRFToken': '{{ csrf_token }}',
+},
+        body: JSON.stringify(postObj)
+        }).then(response => {
+        return response.json();
+        }).then(data => {
+//console.log(data);
+        alert(data['status'], 3000);
+});
+        }else{
+        alert("Please Enter The Quantity !", 3000);
+        }
+});
+
+  });
+
+</script>        
+
+</section>
+
+
+<script src="{% static 'js/script.js' %}"></script>
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>  

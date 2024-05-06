@@ -1,0 +1,179 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddie's Mart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cart.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="overflow-x: hidden;">
+
+  {% include 'navbar.html' %}
+
+<br><br><br>
+
+<section id="cart">
+    <div class="full-content">
+            <div class="cart-title"><i class="fa-solid fa-cart-shopping"></i> Buddie's Cart</div>
+            <div class="container">
+
+                <div class="small-container cart-page">
+                  <table>
+                    <tr>
+                       <th class="pro-i"><i class="fa-solid fa-bag-shopping"></i>Product</th>
+                       <th>Quantity</th>
+                       <th>Amount</th>
+                    </tr>
+
+                {% for item in my_carts %}
+
+                    <tr>
+                        <td>
+                            <div class="cart-info">
+                                <img  src="{{item.product.product_image.url}}">
+                                <div>
+                                  <p>{{item.product.name}}</p>
+                                  <small>Price: <i class="fa-solid fa-indian-rupee-sign "></i> {{item.product.price | stringformat:'d'}}</small>
+                                  <br>
+                                  <a href="{% url 'remove' item.id %}" onclick="return confirm('Are you sure? to Remove')"><i class="fa-solid fa-trash"></i> Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{item.product_qty}}</td>
+                        <td ><i class="fa-solid fa-indian-rupee-sign"></i> <span  class="amount">{{item.total_amount | stringformat:'d'}}</span></td>
+                    </tr>
+
+                {% endfor %}  
+
+
+                  </table>
+
+                <div class="total-price">
+                    <table>
+                    <tr>
+                        <td>Total</td>
+                        <td><i class="fa-solid fa-indian-rupee-sign fa-lg"></i> <span id="tot" style="font-weight: 600;">0</span></td>
+                    </tr>
+                    </table>
+                </div>
+
+                </div>
+
+
+            </div>
+    </div>
+</section>
+
+
+
+<!-- below code for mail purpose -->
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel"><i id="check_form_icon" class="fa-regular fa-circle-check fa-lg"></i> Fill in details to checkout</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <form method="post" action="{% url 'checkout' %}" autocomplete="off">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="recipient-name" class="col-form-label">Mobile Number:</label>
+              <input type="number" name="u_num" class="form-control" id="user_number" required>
+            </div>
+            <div class="mb-3">
+              <label for="message-text" class="col-form-label">Address:</label>
+              <input type="text" name="u_add" class="form-control" id="user_address" required>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" id="submitBtn" class="final_submit_btn btn">Confirm</button> <!--  href="{% url 'checkout' %}" -->
+              </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+<section id="final-submit">
+
+
+    <div class="final-whole-content d-flex ">
+
+        <div class="BTS">               <!--  {% url 'productpage' myshopname %} -->
+            <a href="{% url 'productpage' myshopname %}"><i class="fa-solid fa-left-long fa-xl"></i> Back to Shop</a>
+        </div>
+
+        <div class="CO">
+
+
+        <a href="" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Check out  <i class="fa-solid fa-check fa-xl"></i></a>
+            <!-- {% url 'checkout' %}      onclick="alert('Your Order is Placed Successfully.')" -->
+        </div>
+    </div>
+
+
+</section>
+
+
+
+
+<script>
+    document.getElementById("submitBtn").addEventListener("click", function() {
+      
+      var user_Number = document.getElementById("user_number").value;
+      var user_Address = document.getElementById("user_address").value;
+      let myObj = {
+        'our_user_number' : user_Number,
+        'our_user_address' : user_Address,
+      }
+      // Send the input value to your Django view using AJAX
+      // Example using fetch API
+      
+      fetch('/checkout/', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRFToken': '{{ csrf_token }}',   // Ensure to include the CSRF token
+        },
+        body: JSON.stringify(myObj)
+      }).then(response => {
+        // alert("############", response);    // Handle response as needed
+      }).catch(error => {
+        // alert('Error:', error);    // Handle error
+      });
+    });
+
+</script>
+
+<script>
+   
+     const nodes =document.querySelectorAll('.amount');
+     const arr = Array.from(nodes);
+     const res = arr.reduce((acc, curr) => {
+        return acc += Number(curr.textContent) 
+}, 0);
+     document.getElementById("tot").innerHTML =res;
+
+</script>
+
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>  

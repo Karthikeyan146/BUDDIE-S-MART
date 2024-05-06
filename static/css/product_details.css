@@ -1,0 +1,100 @@
+a{
+    text-decoration: none;
+}
+.pro-image img{
+    width: 50%;
+    border-radius: 20px;
+}
+.product_details-heading{
+    font-size: 27px;
+    color: #5927e5;
+    font-weight: 700;
+}
+.cprice{
+    color: red;
+}
+.oprice{
+    color: green;
+}
+.main-title{
+    font-size: 27px;
+    font-weight: 600;
+    margin-left: 5%;
+}
+.addbtn{
+    background-color: #5927e5;
+    color: white;
+}
+.addbtn:hover{
+    background-color: #9b89b3;
+}
+.from{
+    font-weight: 600;
+}
+
+/* #breadcrumb_nav{
+    position: absolute;
+    right: 5%;
+    top: 12%;
+} */
+#bread_home{
+    background-color: #9b89b3;
+    border-start-start-radius: 20px;
+    border-end-start-radius: 20px;
+    padding-left: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    font-weight: 600;
+}
+#bread_product{
+    background-color: #9b89b3;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    font-weight: 600;
+}
+#bread_product_details{
+    background-color: #9b89b3;
+    border-start-end-radius: 20px;
+    border-end-end-radius: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: white;
+    font-weight: 600;
+}
+
+
+
+
+
+@media (max-width :564px){
+   .product_details-heading{
+    text-align: center;
+    margin-top: 20px;
+   }
+   .addcartbtn{
+    text-align: center;
+   }
+   .product_details-storename{
+    margin-left: 10px;
+   }
+   .product_details-description{
+    margin-left: 10px;
+   }
+   .cprice{
+    margin-left: 10px;
+   }
+   .oprice{
+    margin-left: 10px;
+   }
+   .qtybtn {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+   }
+}
+#OOS_btn:hover{
+    color: white;
+}

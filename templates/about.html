@@ -1,0 +1,70 @@
+{% load static %}
+
+
+<section id="about">
+
+    <div class="whole-about-content bg-black text-light mt-4">
+  
+      <div class="container-fluid">
+  
+       <div class="about-top-content d-lg-flex justify-content-between pt-3">
+  
+        <div class="contact mt-5 ">
+          <div class="contact-heading mb-4 text-center">CONTACT US</div>
+          <div class="phone-no mb-2 text-center"><i style="color: #5927e5;" class="fas fa-phone fa-xl"></i>&nbsp; 1234567890, 0987654321</div>
+          <div class="lane-no  mb-2 text-center"><i style="color: #5927e5;" class="fas fa-tty fa-xl"></i>&nbsp; 222-444-333, 888-666-555</div>
+          <div class="email-id  mb-2 text-center"><i style="color: #5927e5;" class="fas fa-envelope fa-xl"></i>&nbsp; buddie'smart@gmail.com</div>
+  
+          <div class="social-icon text-center mb-2 mt-4">
+             <a class="mx-2" href=""><i class="fab fa-instagram"></i></a>
+             <a class="mx-2" href=""><i class="fa-brands fa-x-twitter"></i></a>
+             <a class="mx-2" href=""><i class="fa-brands fa-facebook"></i></a>
+          </div>
+        </div>
+  
+        <div class="WYCU text-center mt-5">
+          <div class="logo-head-title mb-4 text-center"><img src="{% static 'images/logo.png' %}" alt=""> Buddie's Mart</div>
+          <div class="answer mb-2">WHY SHOULD YOU CHOOSE US <i style="color: red;" class="fas fa-question fa-lg"></i></div>
+          <p class="">We provides specialized focus on rural needs, user-friendly interface, empowerment of local businesses, and significant impact on rural quality of life. </p>
+        </div>
+  
+       </div>
+  
+       <br>
+   
+        <div class="2nd-row d-flex justify-content-around">
+  
+          <div class="feedback ms-4 me-4">
+            <form action="" name="submit-to-google-sheet" autocomplete="off">
+              <div class="feedback-form d-flex flex-column">
+              <div class="feedback-heading text-center"> Share Your Thoughts</div>
+              <input name="Name" type="text" class="feed-name mt-4 rounded-1" placeholder="Your Name " required>
+              <input name="Email" type="email" class="feed-id mt-4 rounded-1 " placeholder="Your Email " required>
+              <textarea name="Feedbacks" class="feed-text mt-4 rounded-1" id="feedback" rows="6" placeholder="Your Feedback or Opinion" required></textarea>
+              </div>
+             <center> <button id="trends-btn" type="submit" class="btn mt-4 mb-5 px-4">Submit</button></center>
+            </form>
+            
+          </div>
+       </div>  
+   </div>
+  
+  <div class="copyright text-light text-center">Copyright  &#169; | Buddie's Mart Private Limited. | All rights Reserved With Copyright </div>
+    <!-- <p class="bg-black text-light copyright">Copyright  &#169; | Buddie's Mart Private Limited. | All rights Reserved With Copyright </p> -->
+  
+    </div>
+    
+  </section>
+
+
+<script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbylTgCUJyxFjvvECQXfaavfDkIS2R_NYIEuy1gz6ljfmd4GRq353rxDrP4Fcfl1Y1gK/exec'
+    const form = document.forms['submit-to-google-sheet']
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault()
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => form.reset())
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>

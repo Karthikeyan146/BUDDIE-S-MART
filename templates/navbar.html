@@ -1,0 +1,79 @@
+{% load static %}
+
+<section id="navbar">
+  
+    <nav class="navbar  fixed-top navbar-expand-md">
+        <div class="container-fluid">
+
+          <a class="logo-container navbar-brand" href="{% url 'homepage' %}">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" width="40" height="34" class="logo d-inline-block align-text-top">
+           <span class="logo-text"> Buddie's Mart</span>
+          </a>
+
+          <!-- <form class="search-container d-flex mt-3 w-50 " role="search" autocomplete="off">
+            <input  class="search-bar form-control me-2 rounded-4 " type="search" placeholder="Search for Shops..." aria-label="Search">
+            <button class="search-btn btn border-0" type="submit"><i class="fas fa-search fa-lg"></i></button>
+          </form> -->
+
+          <button class="toggle-bar navbar-toggler p-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Buddie's Mart</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+
+
+                <li class="nav-item " id="support-btn">
+                  <a class="nav-link fw-bolder fs-5" href="{% url 'homepage' %}">
+                    <span class="link-font"><i class="fa-solid fa-house"></i><span class="res-link"> Home</span></span>
+                  </a>
+                </li>
+
+                <li class="nav-item " id="support-btn">
+                  <a class="nav-link fw-bolder fs-5" href="{% url 'Shop_page' %}">
+                    <span class="link-font"><i class="fa-solid fa-shop"></i><span class="res-link"> Shops</span></span>
+                    </a>
+                </li>
+                
+                <li class="my-li-badge nav-item position-relative" id="cart-btn">
+                  <span class="my-badge position-absolute   translate-middle  rounded-circle">
+                    {{mycart}}</span>
+                  <a id="cart-num-id" class="nav-link fw-bolder fs-5"  aria-current="page" href="{% url 'cartpage' %}">  <!---A tag la active pota black color varum-_---->
+                    
+                   <span class="cart-num link-font"><i class="fas fa-shopping-cart fa-lg"></i><span class="res-link"> Cart</span></span> 
+                  
+                  </a>
+                </li>
+
+                <li class="nav-item " id="support-btn">
+                  <a class="nav-link fw-bolder fs-5" href="{% url 'Supporpage' %}">
+                    <span class="link-font"><i class="fas fa-headset fa-lg"></i><span class="res-link"> Support</span></span>
+                    </a>
+                </li>
+
+              {% if request.user.is_authenticated %}  
+                    <li class="nav-item">
+                      <a class="nav-link fw-bolder fs-5" href="{% url 'logoutpage' %}">
+                        <span class="link-font"><i class="fas fa-sign-in-alt fa-lg"></i><span class="res-link"> Logout</span></span>
+                      </a>
+                    </li>
+              {% else %}
+                <li class="nav-item " id="login-btn">
+                  <a class="nav-link fw-bolder fs-5"  href="{% url 'signinpage' %}">
+                    <span class="link-font"><i class="fas fa-user fa-lg"></i><span class="res-link"> Login</span></span>
+                  </a>
+                </li> 
+              {% endif %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+</section>
+

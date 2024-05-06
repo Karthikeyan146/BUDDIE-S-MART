@@ -1,0 +1,139 @@
+.cart-title{
+    text-align: center;
+    font-size: 27px;
+    font-weight: 600;
+    margin-top: 40px;
+}
+.cart-title i{
+    color: red;
+    font-size:35px ;
+}
+.cart-page{
+    margin: 60px auto 80px;
+}
+table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.cart-info{
+    display: flex;
+    flex-wrap: wrap;
+}
+th{
+    text-align: left;
+    padding: 5px;
+    color: #fff;
+    background: #9b89b3;
+    font-weight: normal;
+}
+td{
+    padding: 10px 5px;
+}
+td a{
+    color: #ff523b;
+    font-size: 12px;
+    font-weight: 600;
+}
+td a:hover{
+    color: black;
+}
+td img{
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    border-radius: 10px;
+}
+
+.total-price{
+    display: flex;
+    justify-content: flex-end;
+}
+.total-price table{
+    border-top: 3px solid #9b89b3;
+    width: 100%;
+    max-width: 400px;
+}
+td:last-child{
+    text-align: right;
+}
+th:last-child{
+    text-align: right;
+}
+.pro-i i{
+    color: red;
+    font-size:20px ;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+
+
+
+/* 
+@media only screen and (max-width:600px){
+    .cart-info p{
+        display: none;
+    }
+} */
+    
+
+#final-submit{
+    position: sticky;
+    bottom: 3%;
+}
+
+.final-whole-content{
+    justify-content: center;
+    align-items: center;
+}
+
+.BTS a{
+    color: #5927e5;
+    font-weight: 700;
+
+    background-color: white;
+    border: 5px solid #5927e5;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    border-start-start-radius: 25px;
+    border-end-start-radius: 25px;
+    border-right: 0;
+    font-size: 15px;
+}
+.BTS a:hover{
+    color:red;
+}
+.CO a{
+    color: white;
+    font-weight: 700;
+    font-size: 15px;
+
+    background-color: #5927e5;
+    border: 5px solid #5927e5;
+    padding-right: 20px;
+    border-start-end-radius: 25px;
+    border-end-end-radius: 25px;
+    border-left: 0;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.CO a:hover{
+    color:red;
+}
+
+.final_submit_btn{
+    background-color: #5927e5;
+    color: white;
+    font-weight:500;
+}
+.final_submit_btn:hover{
+    background-color: #9b89b3;
+    color: white;
+    font-weight: 500;
+}
+#check_form_icon{
+    color: red;
+    
+}

@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddie's Mart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/product.css' %}">
+    <link rel="stylesheet" href="{% static 'css/home.css' %}">
+</head>
+<body style="overflow-x: hidden;">
+
+  {% include 'navbar.html' %}
+
+<br><br><br>
+<!-- -----------------------------------------------store-header------------------------------------------------- -->
+
+<section class="ram-store-header">
+    <div class="ram-store-full-header-content">
+
+<div class="store-header d-flex justify-content-between w-100">
+
+  {% for i in shops %}
+      
+   {% if i.name == shop_name %}
+
+    <div class="store-details flex-fill">
+        <div class="store-name"><i class="fas fa-store"></i>{{shop_name}}</div>
+        <div class="store-address"><i class="fas fa-map-marker-alt"></i> {{i.address}}</div>
+        <div class="store-number"><i style="color: green;" class="fas fa-phone"></i> {{i.mobile}}</div>
+        <div class="store-number"><i style="color: brown;" class="fas fa-tty"></i> {{i.telephone}}</div>
+    </div>
+    <div class="store-map me-4 w-25 mt-4">
+        <iframe class="img-fluid rounded-4 " src="{{i.map_location}}" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+   {% endif %}  
+   
+  {% endfor%}  
+</div>
+    </div>
+</section>
+
+<!-- -------------------------------------------------products--------------------------------------------------- -->
+
+<section id="ram-store-products">
+<div class="ram-store-full">
+
+<div class="store-product-heading mt-5 mb-5"><i class="fas fa-shopping-bag"></i> Products</div>
+
+  <div class="container-fluid">
+    <div class="row row-cols-2  row-cols-lg-4 row-cols-md-3 ">
+
+
+    {% for product in products %}
+
+      <div class="col d-flex justify-content-around mb-5">
+        <div class="product-cards card ">
+          <img src="{{product.product_image.url}}" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text"><i class="fa-solid fa-indian-rupee-sign"></i> {{product.price | stringformat:'d'}} &ensp;<i style="color:red;" class="fa-solid fa-tag fa-lg"></i><span class="off"> {{product.offer}}% OFF</span></p>
+            <a href="{% url 'Product_detailspage' shop_name product.name %}" id="shop-btn" class="btn d-grid gap-2 col-6 mx-auto">Buy</a>
+          </div>
+        </div>
+      </div>
+
+    {% endfor %} 
+
+ 
+    </div>
+  </div>  
+</div>
+</section>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>    
